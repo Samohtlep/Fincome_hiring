@@ -15,11 +15,11 @@ le sujet peut être retrouvé ici : https://github.com/datapane/be-hiring-challe
 
 ### packages requis
 
-fastapi
-uvicorn
-pydantic
-pandas
-python-multipart
+fastapi  
+uvicorn  
+pydantic  
+pandas  
+python-multipart  
 
 ## Utilisation
 
