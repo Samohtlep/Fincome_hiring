@@ -13,7 +13,13 @@ le sujet peut être retrouvé ici : https://github.com/datapane/be-hiring-challe
 
 ## Installation
 
+### packages requis
 
+fastapi
+uvicorn
+pydantic
+pandas
+python-multipart
 
 ## Utilisation
 
