@@ -22,6 +22,7 @@ pandas
 python-multipart  
 openpyxl  
 matplotlib  
+requests  
 
 ## Utilisation
 
