@@ -43,7 +43,7 @@ def create_dataset(file: UploadFile = File(...)):
 
 @app.get("/datasets/{id}/")
 def get_dataset(id: str):
-    # retourne le dataset dont l'id est passé en paramètre
+    # retourne les informations du dataset dont l'id est passé en paramètre
     # arg : id : id du dataset
     # return : id, file_name et size du dataset
     for dataset in datasets:
