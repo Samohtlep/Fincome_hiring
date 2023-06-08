@@ -20,6 +20,7 @@ uvicorn
 pydantic  
 pandas  
 python-multipart  
+openpyxl  
 
 ## Utilisation
 
