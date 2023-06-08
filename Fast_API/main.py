@@ -74,5 +74,17 @@ def get_dataset_excel(id: str):
             return FileResponse(dataset.file_name.split('.')[0]+'.xlsx', media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename=dataset.file_name.split('.')[0]+'.xlsx')
     return {"erreur": "Dataset introuvable"}
 
+@app.get("/datasets/{id}/stats/")
+def get_dataset_stats(id: str):
+    # retourne les statistiques du dataset dont l'id est passé en paramètre sous forme d'objet json
+    # arg : id : id du dataset
+    # return : statistiques du dataset
+    for dataset in datasets:
+        if dataset.id == id:
+            df = pd.DataFrame.from_dict(dataset.dataframe)
+            return df.describe().to_json()
+    return {"erreur": "Dataset introuvable"}
+
+
 if __name__ == "main" :
     uvicorn.run(app, host="127.0.0.1", port=8000)
