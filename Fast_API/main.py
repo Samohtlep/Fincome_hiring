@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import Dict
 import pandas as pd
 from fastapi.responses import FileResponse
+import  matplotlib.pyplot as plt
 
 class Dataset(BaseModel):
     # objet dans lequel on va stocker les données, le contenu des datasets est socké dans un dictionnaire.
@@ -85,6 +86,18 @@ def get_dataset_stats(id: str):
             return df.describe().to_json()
     return {"erreur": "Dataset introuvable"}
 
+
+@app.get("/datasets/{id}/plot/")
+def get_dataset_plot(id: str):
+    # retourne un fichier pdf contant une liste d'histogrammes de toutes les colonnes numériques du dataset dont l'id est passé en paramètre
+    # arg : id : id du dataset
+    # return : fichier pdf contenant les histogrammes
+    for dataset in datasets:
+        if dataset.id == id:
+            df = pd.DataFrame.from_dict(dataset.dataframe)
+            df.hist()
+            plt.savefig(dataset.file_name.split('.')[0]+'_plot.pdf')
+            return FileResponse(dataset.file_name.split('.')[0]+'_plot.pdf', media_type='application/pdf', filename=dataset.file_name.split('.')[0]+'_plot.pdf')
 
 if __name__ == "main" :
     uvicorn.run(app, host="127.0.0.1", port=8000)
