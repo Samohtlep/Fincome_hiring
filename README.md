@@ -21,6 +21,7 @@ pydantic
 pandas  
 python-multipart  
 openpyxl  
+matplotlib  
 
 ## Utilisation
 
