@@ -3,6 +3,7 @@ import uvicorn
 from pydantic import BaseModel
 from typing import Dict
 import pandas as pd
+from fastapi.responses import FileResponse
 
 class Dataset(BaseModel):
     # objet dans lequel on va stocker les données, le contenu des datasets est socké dans un dictionnaire.
@@ -59,6 +60,18 @@ def delete_dataset(id: str):
         if dataset.id == id:
             datasets.remove(dataset)
             return {"message": "Dataset supprimé"}
+    return {"erreur": "Dataset introuvable"}
+
+@app.get("/datasets/{id}/excel/")
+def get_dataset_excel(id: str):
+    # retourne un fichier excel du dataset dont l'id est passé en paramètre
+    # arg : id : id du dataset
+    # return : dataset au format excel
+    for dataset in datasets:
+        if dataset.id == id:
+            df = pd.DataFrame.from_dict(dataset.dataframe)
+            df.to_excel(dataset.file_name.split('.')[0]+'.xlsx', index=False)
+            return FileResponse(dataset.file_name.split('.')[0]+'.xlsx', media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename=dataset.file_name.split('.')[0]+'.xlsx')
     return {"erreur": "Dataset introuvable"}
 
 if __name__ == "main" :
